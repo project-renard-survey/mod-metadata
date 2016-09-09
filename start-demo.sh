@@ -7,11 +7,7 @@ npm install -g webpack
 
 npm install -g webpack-dev-server
 
-./create-tenant.sh
-
-./register.sh ${kbport} ${catalogueport}
-
-./start-with-sample-data.sh ${kbport} ${catalogueport}
+./start-registered.sh ${kbport} ${catalogueport}
 
 cd demo/ui
 
