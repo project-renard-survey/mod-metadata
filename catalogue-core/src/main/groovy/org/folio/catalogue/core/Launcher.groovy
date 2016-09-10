@@ -19,19 +19,30 @@ public class Launcher {
   }
 
   public static start() {
-    def port = Integer.getInteger("catalogue.api.port")
-
-    if(port == null) {
-      println("Warning: No port provided, using default")
-    }
+    def config = getApiConfig()
 
     vertx = Vertx.vertx()
 
     println "Server Starting"
 
-    ApiVerticle.deploy(vertx, ["port" : port]).join()
+    ApiVerticle.deploy(vertx, config).join()
 
     println "Server Started"
+  }
+
+  private static Map getApiConfig() {
+    def port = Integer.getInteger("catalogue.api.port")
+    def apiBaseAddress = System.getProperty("catalogue.api.baseaddress")
+
+    if (port == null) {
+      println("Warning: No port provided, using default")
+    }
+
+    if (apiBaseAddress != null) {
+      println("API base address provided: ${apiBaseAddress}")
+    }
+
+    ["port": port, "apiBaseAddress": apiBaseAddress]
   }
 
   public static stop() {
