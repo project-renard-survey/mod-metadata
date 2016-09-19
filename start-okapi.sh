@@ -2,9 +2,17 @@
 
 #Run this from the root directory of the Okapi source
 
-reachableaddress=${1:-localhost}
+okapi_proxy_address=${1:-"http://localhost:9130"}
+
+if [ $# == 0 ] ; then
+  echo "Using default parameters"
+  echo "Okapi Address: ${okapi_proxy_address}"
+  echo "Usage: ./start-okapi.sh  [okapi proxy address] from the Okapi source root directory"
+fi
+
+mvn compile --quiet
 
 java  \
-      -Dokapiurl="http://${reachableaddress}:9130" \
+      -Dokapiurl="${okapi_proxy_address}" \
       -Dloglevel=DEBUG \
       -jar okapi-core/target/okapi-core-fat.jar dev
